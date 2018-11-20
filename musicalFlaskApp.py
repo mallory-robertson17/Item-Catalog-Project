@@ -10,8 +10,22 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 @app.route('/')
-@app.route('/musicals')
-def getMusicals():
+@app.route('/musicals/<int:musical_id>/')
+def getMusical(musical_id):
+    m = session.query(Musical).filter_by(id=musical_id).first()
+    message = ""
+    message += "<html><body><h1>" + m.name + "</h1><br>"
+    characters = session.query(Character).filter_by(musical_id=m.id).all()
+    print characters
+    for c in characters:
+        message += c.name + ": " + c.actor.name + "<br>"
+    
+    print message
+    return message + "</body></html>"
+
+
+@app.route('/musicals/')
+def getAllMusicals():
     musicals = session.query(Musical)
     message = ""
     for x in musicals:
@@ -20,8 +34,8 @@ def getMusicals():
     return message
 
 
-@app.route('/actors')
-def getActors():
+@app.route('/actors/<int:actor_id>/')
+def getActors(actor_id):
     actors = session.query(Actor)
     message = ""
     for x in actors:
@@ -30,8 +44,8 @@ def getActors():
     return message
 
 
-@app.route('/characters')
-def getCharacters():
+@app.route('/characters/<int:character_id>/')
+def getCharacters(character_id):
     characters = session.query(Character)
     message = ""
     for x in characters:
