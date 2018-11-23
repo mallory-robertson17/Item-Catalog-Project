@@ -11,6 +11,7 @@ class Actor(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(40), nullable=False)
+	createdBy = Column(String(40), nullable=False)
 
 
 class Musical(Base):
@@ -20,6 +21,7 @@ class Musical(Base):
     name = Column(String(80), nullable=False)
     summary = Column(String(500))
     year = Column(String(8), nullable=False)
+	createdBy = Column(String(40), nullable=False)
 
 
 class Character(Base):
@@ -31,7 +33,7 @@ class Character(Base):
     actor = relationship(Actor)
     musical_id = Column(Integer, ForeignKey('musical.id'))
     musical = relationship(Musical)
-
+	createdBy = Column(String(40), nullable=False)
 
 engine = create_engine('sqlite:///broadwaymusicals.db')
 
