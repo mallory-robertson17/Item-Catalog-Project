@@ -1,0 +1,24 @@
+<html>
+
+<body>
+
+<h1>{{musical.name + " - " + musical.year}}</h1>
+
+<div>
+
+<h2>{{musical.description}}</h2>
+
+{% for c in characters %}
+
+<div>
+
+<p>{{c.name}}</p>
+
+<p>{{c.actor.name}}</p>
+
+</div>
+
+{% endfor %}
+</body>
+
+</html>

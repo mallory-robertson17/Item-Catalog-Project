@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from musicalDBBuilder import Base, Actor, Musical, Character
@@ -10,18 +10,12 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 @app.route('/')
+
 @app.route('/musicals/<int:musical_id>/')
 def getMusical(musical_id):
     m = session.query(Musical).filter_by(id=musical_id).first()
-    message = ""
-    message += "<html><body><h1>" + m.name + "</h1><br>"
-    characters = session.query(Character).filter_by(musical_id=m.id).all()
-    print characters
-    for c in characters:
-        message += c.name + ": " + c.actor.name + "<br>"
     
-    print message
-    return message + "</body></html>"
+    return render_template('musical.html', musical=m)
 
 
 @app.route('/musicals/')
