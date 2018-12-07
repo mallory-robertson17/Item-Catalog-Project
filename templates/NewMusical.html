@@ -1,0 +1,23 @@
+<html>
+<body>
+<h1> New Musical </h1>
+
+<form action="{{url_for('newMusical', name=name, year=year, summary=summary)}}" method = 'POST'>
+
+<p>Name:</p>
+<input type='text' size='30' name='name'>
+
+<p>Year:</p>
+<input type='int' size='30' name='year'>
+
+<p>Summary:</p>
+<input type='text' size='400' name='summary'>
+
+<input type='submit' value='Create'>
+
+</form>
+
+<a href= '{{url_for('newMusical')}}'>Cancel</a>
+
+</body>
+</html>

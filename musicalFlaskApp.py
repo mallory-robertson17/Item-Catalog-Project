@@ -29,22 +29,22 @@ def getAllMusicals():
     print message
     return message
 
+@app.route('/musicals/new/', methods=['GET','POST'])
+def newMusical():
+    if request.method == 'POST':
+        newMusical = Musical(name = request.form['name'], summary = request.form['summary'], year = request.form['year'])
+        session.add(newMusical)
+        session.commit()
+        return redirect(url_for('newMusical'))
+    else:
+        return render_template('NewMusical.html')
+
 
 @app.route('/actors/<int:actor_id>/')
 def getActor(actor_id):
     a = session.query(Actor).filter_by(id=actor_id)
     c = session.query(Character).filter_by(actor_id=actor_id)
     return render_template('actor.html', actor=a, characters=c)
-
-
-@app.route('/characters/<int:character_id>/')
-def getCharacters(character_id):
-    characters = session.query(Character)
-    message = ""
-    for x in characters:
-        message += "<html><body>" + x.name + "</body></html>"
-    print message
-    return message
 
 
 if __name__ == '__main__':
