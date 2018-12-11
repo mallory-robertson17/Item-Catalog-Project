@@ -43,7 +43,7 @@ def newMusical():
 
 @app.route('/actors/<int:actor_id>/')
 def getActor(actor_id):
-    a = session.query(Actor).filter_by(id=actor_id)
+    a = session.query(Actor).filter_by(id=actor_id).first()
     c = session.query(Character).filter_by(actor_id=actor_id)
     return render_template('actor.html', actor=a, characters=c)
 
