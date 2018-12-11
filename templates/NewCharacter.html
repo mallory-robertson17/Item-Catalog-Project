@@ -1,0 +1,36 @@
+<html>
+<body>
+<h1> New Character </h1>
+
+<form action="{{url_for('newCharacter')}}" method = 'POST'>
+
+<p>Character Name:</p>
+
+<input type='text' size='30' name='name'>
+
+<p>Musical:</p>
+
+<select name="musicalId">
+  {% for m in musicals %}
+
+  <option value={{m.id}}>{{m.name}}</option>
+
+  {% endfor %}
+</select>
+
+<p>Actor:</p>
+
+<select name="actorId">
+  {% for a in actors %}
+
+  <option value={{a.id}}>{{a.name}}</option>
+
+  {% endfor %}
+</select>
+
+<input type='submit' value='Create'>
+
+</form>
+
+</body>
+</html>

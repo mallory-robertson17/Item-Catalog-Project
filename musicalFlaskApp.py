@@ -17,7 +17,7 @@ def getMusical(musical_id):
     m = session.query(Musical).filter_by(id=musical_id).first()
     c = session.query(Character).filter_by(musical_id=m.id)
     print c
-
+    
     return render_template('musical.html', musical=m, characters=c)
 
 
@@ -67,6 +67,22 @@ def newActor():
         return redirect(url_for('newActor'))
     else:
         return render_template('NewActor.html')
+
+@app.route('/characters/new/', methods=['GET','POST'])
+def newCharacter():
+    
+    if request.method == 'POST':
+        m = session.query(Musical).filter_by(id=request.form['musicalId']).first()
+        a = session.query(Actor).filter_by(id=request.form['actorId']).first()
+        newCharacter = Character(name = request.form['name'], actor=a, actor_id=request.form['actorId'], musical=m, musical_id=request.form['musicalId'])
+        session.add(newCharacter)
+        session.commit()
+        return redirect(url_for('newCharacter'))
+    
+    else:
+        m = session.query(Musical)
+        a = session.query(Actor)
+        return render_template('NewCharacter.html', musicals=m, actors=a)
 
 
 if __name__ == '__main__':
