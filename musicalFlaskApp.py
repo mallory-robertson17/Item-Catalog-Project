@@ -36,6 +36,19 @@ def newMusical():
     else:
         return render_template('NewMusical.html')
 
+@app.route('/musicals/edit/<int:musical_id>/', methods=['GET','PUT'])
+def editMusical(musical_id):
+    m = session.query(Musical).filter_by(id=musical_id).first()
+    if request.method == 'PUT':
+        m.name=request.form['name']
+        m.summary = request.form['summary']
+        m.year = request.form['year']
+        session.add(m)
+        session.commit()
+        return redirect(url_for('musical', musical_id=musical_id))
+    else:
+        return render_template('EditMusical.html', musical=m)
+
 
 @app.route('/actors/<int:actor_id>/')
 def getActor(actor_id):

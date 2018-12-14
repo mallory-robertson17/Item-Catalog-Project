@@ -17,6 +17,9 @@
 </div>
 
 {% endfor %}
+<a href= '{{url_for('editMusical', musical_id=musical.id)}}'>Edit</a>
+<a href= '{{url_for('getAllMusicals')}}'>Back</a>
+
 </body>
 
 </html>

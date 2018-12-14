@@ -1,0 +1,23 @@
+<html>
+<body>
+<h1> Edit Musical </h1>
+
+<form action="{{url_for('editMusical', musical_id=musical.id)}}" method = 'PUT'>
+
+<p>Name:</p>
+<input type='text' size='30' name='name' placeholder={{musical.name}}>
+
+<p>Year:</p>
+<input type='int' size='30' name='year' placeholder={{musical.year}}>
+
+<p>Summary:</p>
+<textarea type='text' size='400' name='summary' placeholder={{musical.summary}}>
+
+<input type='submit' value='Submit'>
+
+</form>
+
+<a href= '{{url_for('getAllMusicals')}}'>Cancel</a>
+
+</body>
+</html>
