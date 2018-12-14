@@ -1,0 +1,23 @@
+<html>
+
+<body>
+
+<h1>All Musicals</h1>
+
+<div>
+
+<a href= '{{url_for('newMusical')}}'>Add New Musical</a>
+
+<div>
+  <div>
+{% for m in musicals %}
+
+<div>
+<a href= '{{url_for('getMusical', musical_id=m.id)}}'>{{m.name}} - {{m.year}}</a>
+
+</div>
+
+{% endfor %}
+</body>
+
+</html>

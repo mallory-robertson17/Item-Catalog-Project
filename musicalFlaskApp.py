@@ -12,7 +12,7 @@ session = DBSession()
 
 @app.route('/')
 
-@app.route('/musicals/<int:musical_id>/')
+@app.route('/musical/<int:musical_id>/')
 def getMusical(musical_id):
     m = session.query(Musical).filter_by(id=musical_id).first()
     c = session.query(Character).filter_by(musical_id=m.id)
@@ -24,11 +24,7 @@ def getMusical(musical_id):
 @app.route('/musicals/')
 def getAllMusicals():
     musicals = session.query(Musical)
-    message = ""
-    for x in musicals:
-        message += "<html><body>" + x.name + "</body></html><br>"
-    print message
-    return message
+    return render_template('Musicals.html', musicals=musicals)
 
 @app.route('/musicals/new/', methods=['GET','POST'])
 def newMusical():
@@ -70,7 +66,7 @@ def newActor():
 
 @app.route('/characters/new/', methods=['GET','POST'])
 def newCharacter():
-    
+
     if request.method == 'POST':
         m = session.query(Musical).filter_by(id=request.form['musicalId']).first()
         a = session.query(Actor).filter_by(id=request.form['actorId']).first()
@@ -78,7 +74,7 @@ def newCharacter():
         session.add(newCharacter)
         session.commit()
         return redirect(url_for('newCharacter'))
-    
+
     else:
         m = session.query(Musical)
         a = session.query(Actor)
