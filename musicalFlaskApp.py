@@ -85,7 +85,7 @@ def newCharacter():
 
     if request.method == 'POST':
         m = session.query(Musical).filter_by(id=request.form['musicalId']).one()
-        a = session.query(Actor).filter_by(id=request.form['actorId']).first()
+        a = session.query(Actor).filter_by(id=request.form['actorId']).one()
         newCharacter = Character(name = request.form['name'], actor=a, actor_id=request.form['actorId'], musical=m, musical_id=request.form['musicalId'])
         session.add(newCharacter)
         session.commit()
@@ -95,6 +95,28 @@ def newCharacter():
         m = session.query(Musical)
         a = session.query(Actor)
         return render_template('NewCharacter.html', musicals=m, actors=a)
+
+@app.route('/characters/edit/<int:character_id>/', methods=['GET','POST'])
+def editCharacter(character_id):
+    c = session.query(Character).filter_by(id=character_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            c.name=request.form['name']
+        if request.form['musicalId']:
+            m = session.query(Musical).filter_by(id=request.form['musicalId']).one()
+            c.musical_id=m.id
+            c.musical=m
+        if request.form['actorId']:
+            a = session.query(Actor).filter_by(id=request.form['actorId']).one()
+            c.actor_id = a.id
+            c.actor=a
+        session.add(c)
+        session.commit()
+        return redirect(url_for('getMusical', musical_id=c.musical_id))
+    else:
+        musicals = session.query(Musical)
+        actors = session.query(Actor)
+        return render_template('EditCharacter.html', character=c, musicals=musicals, actors=actors)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,42 @@
+<html>
+<body>
+<h1> New Character </h1>
+
+<form action="{{url_for('editCharacter', character_id=character.id)}}" method = 'POST'>
+
+<p>Character Name:</p>
+
+<input type='text' size='30' name='name' placeholder={{character.name}}>
+
+<p>Musical:</p>
+
+<select name="musicalId">
+  {% for m in musicals %}
+    {% if m.id == character.musical_id %}
+      <option value={{m.id}} selected="selected">{{m.name}}</option>
+    {% else %}
+      <option value={{m.id}}>{{m.name}}</option>
+    {% endif %}
+  {% endfor %}
+</select>
+
+<p>Actor:</p>
+
+<select name="actorId">
+  {% for a in actors %}
+
+    {% if a.id == character.actor_id %}
+      <option value={{a.id}} selected="selected">{{a.name}}</option>
+    {% else %}
+      <option value={{a.id}}>{{a.name}}</option>
+    {% endif %}
+
+  {% endfor %}
+</select>
+
+<input type='submit' value='Edit'>
+
+</form>
+
+</body>
+</html>
