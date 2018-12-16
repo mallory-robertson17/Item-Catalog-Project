@@ -36,23 +36,26 @@ def newMusical():
     else:
         return render_template('NewMusical.html')
 
-@app.route('/musicals/edit/<int:musical_id>/', methods=['GET','PUT'])
+@app.route('/musicals/edit/<int:musical_id>/', methods=['GET','POST'])
 def editMusical(musical_id):
-    m = session.query(Musical).filter_by(id=musical_id).first()
-    if request.method == 'PUT':
-        m.name=request.form['name']
-        m.summary = request.form['summary']
-        m.year = request.form['year']
+    m = session.query(Musical).filter_by(id=musical_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            m.name=request.form['name']
+        if request.form['summary']:
+            m.summary = request.form['summary']
+        if request.form['year']:
+            m.year = request.form['year']
         session.add(m)
         session.commit()
-        return redirect(url_for('musical', musical_id=musical_id))
+        return redirect(url_for('getMusical', musical_id=musical_id))
     else:
         return render_template('EditMusical.html', musical=m)
 
 
 @app.route('/actors/<int:actor_id>/')
 def getActor(actor_id):
-    a = session.query(Actor).filter_by(id=actor_id).first()
+    a = session.query(Actor).filter_by(id=actor_id).one()
     c = session.query(Character).filter_by(actor_id=actor_id)
     return render_template('actor.html', actor=a, characters=c)
 
@@ -81,7 +84,7 @@ def newActor():
 def newCharacter():
 
     if request.method == 'POST':
-        m = session.query(Musical).filter_by(id=request.form['musicalId']).first()
+        m = session.query(Musical).filter_by(id=request.form['musicalId']).one()
         a = session.query(Actor).filter_by(id=request.form['actorId']).first()
         newCharacter = Character(name = request.form['name'], actor=a, actor_id=request.form['actorId'], musical=m, musical_id=request.form['musicalId'])
         session.add(newCharacter)

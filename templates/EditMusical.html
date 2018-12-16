@@ -2,7 +2,7 @@
 <body>
 <h1> Edit Musical </h1>
 
-<form action="{{url_for('editMusical', musical_id=musical.id)}}" method = 'PUT'>
+<form action="{{url_for('editMusical', musical_id=musical.id)}}" method = 'POST'>
 
 <p>Name:</p>
 <input type='text' size='30' name='name' placeholder={{musical.name}}>
@@ -11,9 +11,9 @@
 <input type='int' size='30' name='year' placeholder={{musical.year}}>
 
 <p>Summary:</p>
-<textarea type='text' size='400' name='summary' placeholder={{musical.summary}}>
+<textarea type='text' size='400' name='summary' placeholder={{musical.summary}}></textarea>
 
-<input type='submit' value='Submit'>
+<input type='submit' value='Edit'>
 
 </form>
 
